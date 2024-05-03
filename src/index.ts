@@ -26,7 +26,7 @@ app.get("/api/item/:slug", (req: Request, res: Response) => {
 
 app.get("/pirates", async (req, res) => {
   try {
-    const users = {
+    const pirates = {
       rows: [
         {
           id: "234234",
@@ -81,8 +81,8 @@ app.get("/pirates", async (req, res) => {
       ],
     };
 
-    if (users && users.rows.length > 0) {
-      let tableContent = users.rows
+    if (pirates && pirates.rows.length > 0) {
+      let tableContent = pirates.rows
         .map(
           (user) =>
             `<tr>
@@ -96,7 +96,7 @@ app.get("/pirates", async (req, res) => {
       res.status(200).send(`
                 <html>
                     <head>
-                        <title>Users</title>
+                        <title>Pirates</title>
                         <style>
                             body {
                                 font-family: Arial, sans-serif;
@@ -122,11 +122,11 @@ app.get("/pirates", async (req, res) => {
                         </style>
                     </head>
                     <body>
-                        <h1>Users</h1>
+                        <h1>Pirates</h1>
                         <table>
                             <thead>
                                 <tr>
-                                    <th>User ID</th>
+                                    <th>Pirate ID</th>
                                     <th>Name</th>
                                     <th>Email</th>
                                 </tr>
@@ -136,18 +136,17 @@ app.get("/pirates", async (req, res) => {
                             </tbody>
                         </table>
                         <div>
-                            <a href="/">Home</a>
-                            <a href="/uploadUser">Add User</a>
+                            <a href="/add-pirate">Add Pirate</a>
                         </div>
                     </body>
                 </html>
             `);
     } else {
-      res.status(404).send("Users not found");
+      res.status(404).send("Pirates not found");
     }
   } catch (error) {
     console.error(error);
-    res.status(500).send("Error retrieving users");
+    res.status(500).send("Error retrieving pirates");
   }
 });
 
