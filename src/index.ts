@@ -24,7 +24,7 @@ app.get("/api/item/:slug", (req: Request, res: Response) => {
   res.end(`Item: ${slug}`);
 });
 
-app.get("/pirates", async (_req: Request, res: Response) => {
+app.get("/pirates", (_req: Request, res: Response) => {
   try {
     const pirates = {
       rows: [
