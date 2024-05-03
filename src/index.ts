@@ -86,13 +86,14 @@ app.get("/pirates", async (req, res) => {
         .map(
           (user) =>
             `<tr>
-                        <td>${user.id}</td>
-                        <td>${user.name}</td>
-                        <td>${user.email}</td>
-                    </tr>`
+                <td>${user.id}</td>
+                <td>${user.name}</td>
+                <td>${user.email}</td>
+            </tr>`
         )
         .join("");
-
+      res.setHeader("Content-Type", "text/html");
+      res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
       res.status(200).send(`
                 <html>
                     <head>
