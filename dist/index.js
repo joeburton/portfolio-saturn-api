@@ -119,7 +119,15 @@ app.get("/sendmail", (_req, res) => __awaiter(void 0, void 0, void 0, function* 
     };
     try {
         yield mail_1.default.send(msg);
-        res.end(`Mail sent`);
+        res.status(200).json({
+            message: "Success",
+            data: {
+                name,
+                email,
+                phoneNumber,
+                message,
+            },
+        });
     }
     catch (error) {
         console.error(error);

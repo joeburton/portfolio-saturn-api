@@ -117,7 +117,15 @@ app.get("/sendmail", async (_req: Request, res: Response) => {
 
   try {
     await sgMail.send(msg);
-    res.end(`Mail sent`);
+    res.status(200).json({
+      message: "Success",
+      data: {
+        name,
+        email,
+        phoneNumber,
+        message,
+      },
+    });
   } catch (error) {
     console.error(error);
     if (error.response) {
