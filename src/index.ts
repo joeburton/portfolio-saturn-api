@@ -117,7 +117,7 @@ app.get("sendmail", (_req: Request, res: Response) => {
 
   try {
     // const response = await sgMail.send(msg);
-    res.end(`Mail sent: ${msg.html}`);
+    return res.end(`Mail sent: ${msg.html}`);
   } catch (error) {
     console.error(error);
     if (error.response) {
