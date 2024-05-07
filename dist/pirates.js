@@ -6,7 +6,7 @@ exports.pirates = {
         {
             id: "234234",
             name: "Captain Hook",
-            email: "captainhook@hook.com",
+            email: "captainhook@pirates.com",
         },
         {
             id: "345345",
