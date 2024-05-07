@@ -1,13 +1,4 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -105,7 +96,7 @@ app.get("/pirates", (_req, res) => {
     }
 });
 mail_1.default.setApiKey(process.env.SENDGRID_API_KEY);
-app.get("sendmail", (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
+app.get("sendmail", (_req, res) => {
     const name = "Jill Hill";
     const email = "jillhill@hotmail.com";
     const phoneNumber = "0668932134";
@@ -118,8 +109,8 @@ app.get("sendmail", (_req, res) => __awaiter(void 0, void 0, void 0, function* (
         html: `<p>Name: ${name}</p><p>Email: ${email}</p><p>Phone Number: ${phoneNumber}</p><p>Message: ${message}</p>`,
     };
     try {
-        const response = yield mail_1.default.send(msg);
-        res.end(`Mail sent: ${response}`);
+        // const response = await sgMail.send(msg);
+        res.end(`Mail sent: ${msg.html}`);
     }
     catch (error) {
         console.error(error);
@@ -128,7 +119,7 @@ app.get("sendmail", (_req, res) => __awaiter(void 0, void 0, void 0, function* (
             res.status(500).send("Email failed to send");
         }
     }
-}));
+});
 app.listen(port, () => {
     return console.log(`Server is listening on ${port}`);
 });
