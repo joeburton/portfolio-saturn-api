@@ -100,15 +100,21 @@ app.get("/pirates", (_req: Request, res: Response) => {
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-const msg = {
-  to: "maxsmith@gmail.com", // Sender
-  from: "joeburton@gmail.com", // Recipient: Use the email address or domain you verified above
-  subject: "Senior Frontend Engineer Role",
-  text: "We have a whole world of Development challenges waiting for you.",
-  html: "<strong>You will be using AI, ohhh wow I hear you cry... removed</strong>",
-};
-
 app.get("sendmail", async (_req: Request, res: Response) => {
+  const name = "Jill Hill";
+  const email = "jillhill@hotmail.com";
+  const phoneNumber = "0668932134";
+  const message =
+    "I have a fascinating proposition for you Joe, please do get in touch!";
+
+  const msg = {
+    to: "joeburton@gmail.com", // email that will receive all form submissions
+    from: "joeburton@gmail.com", // your SendGrid registered email
+    subject: "New Form Submission",
+    text: `Name: ${name}\nEmail: ${email}\nPhone Number: ${phoneNumber}\nMessage: ${message}`,
+    html: `<p>Name: ${name}</p><p>Email: ${email}</p><p>Phone Number: ${phoneNumber}</p><p>Message: ${message}</p>`,
+  };
+
   try {
     const response = await sgMail.send(msg);
     res.end(`Mail sent: ${response}`);
