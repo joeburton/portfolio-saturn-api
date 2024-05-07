@@ -1,4 +1,13 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -14,6 +23,9 @@ app.get("/", (_req, res) => {
 });
 app.get("/ping", (_req, res) => {
     return res.send("pong 🏓");
+});
+app.get("/pub", (_req, res) => {
+    return res.send("pint 🍺");
 });
 app.get("/api", (_req, res) => {
     const path = `/api/item/${(0, uuid_1.v4)()}`;
@@ -96,33 +108,30 @@ app.get("/pirates", (_req, res) => {
     }
 });
 mail_1.default.setApiKey(process.env.SENDGRID_API_KEY);
-app.get("sendmail", (_req, res) => {
-    res.setHeader("Content-Type", "text/html");
-    res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
-    res.end(`<p>Send some mail</p>`);
-    // const name = "Jill Hill";
-    // const email = "jillhill@hotmail.com";
-    // const phoneNumber = "0668932134";
-    // const message =
-    //   "I have a fascinating proposition for you Joe, please do get in touch!";
-    // const msg = {
-    //   to: "joeburton@gmail.com", // email that will receive all form submissions
-    //   from: "joeburton@gmail.com", // your SendGrid registered email
-    //   subject: "New Form Submission",
-    //   text: `Name: ${name}\nEmail: ${email}\nPhone Number: ${phoneNumber}\nMessage: ${message}`,
-    //   html: `<p>Name: ${name}</p><p>Email: ${email}</p><p>Phone Number: ${phoneNumber}</p><p>Message: ${message}</p>`,
-    // };
-    // try {
-    //   // const response = await sgMail.send(msg);
-    //   res.end(`Mail sent: ${response}`);
-    // } catch (error) {
-    //   console.error(error);
-    //   if (error.response) {
-    //     console.error(error.response.body);
-    //     res.status(500).send("Email failed to send");
-    //   }
-    // }
-});
+app.get("sendmail", (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const name = "Jill Hill";
+    const email = "jillhill@hotmail.com";
+    const phoneNumber = "0668932134";
+    const message = "I have a fascinating proposition for you Joe, please do get in touch!";
+    const msg = {
+        to: "joeburton@gmail.com",
+        from: "joeburton@gmail.com",
+        subject: "New Form Submission",
+        text: `Name: ${name}\nEmail: ${email}\nPhone Number: ${phoneNumber}\nMessage: ${message}`,
+        html: `<p>Name: ${name}</p><p>Email: ${email}</p><p>Phone Number: ${phoneNumber}</p><p>Message: ${message}</p>`,
+    };
+    try {
+        const response = yield mail_1.default.send(msg);
+        res.end(`Mail sent: ${response}`);
+    }
+    catch (error) {
+        console.error(error);
+        if (error.response) {
+            console.error(error.response.body);
+            res.status(500).send("Email failed to send");
+        }
+    }
+}));
 app.listen(port, () => {
     return console.log(`Server is listening on ${port}`);
 });

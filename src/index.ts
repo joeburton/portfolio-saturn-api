@@ -14,6 +14,10 @@ app.get("/ping", (_req: Request, res: Response) => {
   return res.send("pong 🏓");
 });
 
+app.get("/pub", (_req: Request, res: Response) => {
+  return res.send("pint 🍺");
+});
+
 app.get("/api", (_req: Request, res: Response) => {
   const path = `/api/item/${v4()}`;
   res.setHeader("Content-Type", "text/html");
@@ -100,34 +104,31 @@ app.get("/pirates", (_req: Request, res: Response) => {
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-app.get("sendmail", (_req: Request, res: Response) => {
-  res.setHeader("Content-Type", "text/html");
-  res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
-  res.end(`<p>Send some mail</p>`);
-  // const name = "Jill Hill";
-  // const email = "jillhill@hotmail.com";
-  // const phoneNumber = "0668932134";
-  // const message =
-  //   "I have a fascinating proposition for you Joe, please do get in touch!";
+app.get("sendmail", async (_req: Request, res: Response) => {
+  const name = "Jill Hill";
+  const email = "jillhill@hotmail.com";
+  const phoneNumber = "0668932134";
+  const message =
+    "I have a fascinating proposition for you Joe, please do get in touch!";
 
-  // const msg = {
-  //   to: "joeburton@gmail.com", // email that will receive all form submissions
-  //   from: "joeburton@gmail.com", // your SendGrid registered email
-  //   subject: "New Form Submission",
-  //   text: `Name: ${name}\nEmail: ${email}\nPhone Number: ${phoneNumber}\nMessage: ${message}`,
-  //   html: `<p>Name: ${name}</p><p>Email: ${email}</p><p>Phone Number: ${phoneNumber}</p><p>Message: ${message}</p>`,
-  // };
+  const msg = {
+    to: "joeburton@gmail.com", // email that will receive all form submissions
+    from: "joeburton@gmail.com", // your SendGrid registered email
+    subject: "New Form Submission",
+    text: `Name: ${name}\nEmail: ${email}\nPhone Number: ${phoneNumber}\nMessage: ${message}`,
+    html: `<p>Name: ${name}</p><p>Email: ${email}</p><p>Phone Number: ${phoneNumber}</p><p>Message: ${message}</p>`,
+  };
 
-  // try {
-  //   // const response = await sgMail.send(msg);
-  //   res.end(`Mail sent: ${response}`);
-  // } catch (error) {
-  //   console.error(error);
-  //   if (error.response) {
-  //     console.error(error.response.body);
-  //     res.status(500).send("Email failed to send");
-  //   }
-  // }
+  try {
+    const response = await sgMail.send(msg);
+    res.end(`Mail sent: ${response}`);
+  } catch (error) {
+    console.error(error);
+    if (error.response) {
+      console.error(error.response.body);
+      res.status(500).send("Email failed to send");
+    }
+  }
 });
 
 app.listen(port, () => {
