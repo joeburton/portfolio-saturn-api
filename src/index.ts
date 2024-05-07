@@ -110,7 +110,7 @@ app.get("/sendmail", async (_req: Request, res: Response) => {
   const msg = {
     to: "joeburton@gmail.com", // email that will receive all form submissions
     from: "joeburton@gmail.com", // your SendGrid registered email
-    subject: "New Form Submission",
+    subject: `Enquiry from ${email}`,
     text: `Name: ${name}\nEmail: ${email}\nPhone Number: ${phoneNumber}\nMessage: ${message}`,
     html: `<p>Name: ${name}</p><p>Email: ${email}</p><p>Phone Number: ${phoneNumber}</p><p>Message: ${message}</p>`,
   };

@@ -113,7 +113,7 @@ app.get("/sendmail", (_req, res) => __awaiter(void 0, void 0, void 0, function* 
     const msg = {
         to: "joeburton@gmail.com",
         from: "joeburton@gmail.com",
-        subject: "New Form Submission",
+        subject: `Enquiry from ${email}`,
         text: `Name: ${name}\nEmail: ${email}\nPhone Number: ${phoneNumber}\nMessage: ${message}`,
         html: `<p>Name: ${name}</p><p>Email: ${email}</p><p>Phone Number: ${phoneNumber}</p><p>Message: ${message}</p>`,
     };
