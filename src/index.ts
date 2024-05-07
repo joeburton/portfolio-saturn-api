@@ -14,10 +14,6 @@ app.get("/ping", (_req: Request, res: Response) => {
   return res.send("pong 🏓");
 });
 
-app.get("/pub", (_req: Request, res: Response) => {
-  return res.send("pint 🍺");
-});
-
 app.get("/api", (_req: Request, res: Response) => {
   const path = `/api/item/${v4()}`;
   res.setHeader("Content-Type", "text/html");
@@ -102,9 +98,9 @@ app.get("/pirates", (_req: Request, res: Response) => {
   }
 });
 
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+app.get("/sendmail", async (_req: Request, res: Response) => {
+  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-app.post("sendmail", async (_req: Request, res: Response) => {
   const name = "Jill Hill";
   const email = "jillhill@hotmail.com";
   const phoneNumber = "0668932134";
@@ -120,8 +116,8 @@ app.post("sendmail", async (_req: Request, res: Response) => {
   };
 
   try {
-    const response = await sgMail.send(msg);
-    res.end(`Mail sent: ${response}`);
+    await sgMail.send(msg);
+    res.end(`Mail sent`);
   } catch (error) {
     console.error(error);
     if (error.response) {

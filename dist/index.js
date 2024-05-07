@@ -24,9 +24,6 @@ app.get("/", (_req, res) => {
 app.get("/ping", (_req, res) => {
     return res.send("pong 🏓");
 });
-app.get("/pub", (_req, res) => {
-    return res.send("pint 🍺");
-});
 app.get("/api", (_req, res) => {
     const path = `/api/item/${(0, uuid_1.v4)()}`;
     res.setHeader("Content-Type", "text/html");
@@ -107,8 +104,8 @@ app.get("/pirates", (_req, res) => {
         res.status(500).send("Error retrieving pirates");
     }
 });
-mail_1.default.setApiKey(process.env.SENDGRID_API_KEY);
-app.post("sendmail", (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
+app.get("/sendmail", (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    mail_1.default.setApiKey(process.env.SENDGRID_API_KEY);
     const name = "Jill Hill";
     const email = "jillhill@hotmail.com";
     const phoneNumber = "0668932134";
@@ -121,8 +118,8 @@ app.post("sendmail", (_req, res) => __awaiter(void 0, void 0, void 0, function* 
         html: `<p>Name: ${name}</p><p>Email: ${email}</p><p>Phone Number: ${phoneNumber}</p><p>Message: ${message}</p>`,
     };
     try {
-        const response = yield mail_1.default.send(msg);
-        res.end(`Mail sent: ${response}`);
+        yield mail_1.default.send(msg);
+        res.end(`Mail sent`);
     }
     catch (error) {
         console.error(error);
