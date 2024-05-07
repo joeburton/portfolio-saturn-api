@@ -1,7 +1,8 @@
 import express, { Request, Response } from "express";
-import { v4 } from "uuid";
-import { pirates } from "./pirates";
 import sgMail from "@sendgrid/mail";
+import { v4 } from "uuid";
+
+import { pirates } from "./pirates";
 
 const app = express();
 const port = process.env.PORT || 8080;
@@ -98,6 +99,12 @@ app.get("/pirates", (_req: Request, res: Response) => {
   }
 });
 
+app.get("/pirates-data", (_req: Request, res: Response) => {
+  res.status(200).json({
+    pirates,
+  });
+});
+
 app.get("/sendmail", async (_req: Request, res: Response) => {
   sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
@@ -108,8 +115,8 @@ app.get("/sendmail", async (_req: Request, res: Response) => {
     "I have a fascinating proposition for you Joe, please do get in touch!";
 
   const msg = {
-    to: "joeburton@gmail.com", // email that will receive all form submissions
-    from: "joeburton@gmail.com", // your SendGrid registered email
+    to: "joeburton@gmail.com", // email address that will receive message
+    from: "joeburton@gmail.com", // @sendgrid/mail registered email
     subject: `Enquiry from ${email}`,
     text: `Name: ${name}\nEmail: ${email}\nPhone Number: ${phoneNumber}\nMessage: ${message}`,
     html: `<p>Name: ${name}</p><p>Email: ${email}</p><p>Phone Number: ${phoneNumber}</p><p>Message: ${message}</p>`,
