@@ -108,7 +108,7 @@ app.get("/pirates", (_req, res) => {
     }
 });
 mail_1.default.setApiKey(process.env.SENDGRID_API_KEY);
-app.get("sendmail", (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
+app.post("sendmail", (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const name = "Jill Hill";
     const email = "jillhill@hotmail.com";
     const phoneNumber = "0668932134";

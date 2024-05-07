@@ -104,7 +104,7 @@ app.get("/pirates", (_req: Request, res: Response) => {
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-app.get("sendmail", async (_req: Request, res: Response) => {
+app.post("sendmail", async (_req: Request, res: Response) => {
   const name = "Jill Hill";
   const email = "jillhill@hotmail.com";
   const phoneNumber = "0668932134";
