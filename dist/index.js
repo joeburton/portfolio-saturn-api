@@ -13,9 +13,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
+const mail_1 = __importDefault(require("@sendgrid/mail"));
 const uuid_1 = require("uuid");
 const pirates_1 = require("./pirates");
-const mail_1 = __importDefault(require("@sendgrid/mail"));
 const app = (0, express_1.default)();
 const port = process.env.PORT || 8080;
 app.get("/", (_req, res) => {
@@ -103,6 +103,11 @@ app.get("/pirates", (_req, res) => {
         console.error(error);
         res.status(500).send("Error retrieving pirates");
     }
+});
+app.get("/pirates-data", (_req, res) => {
+    res.status(200).json({
+        pirates: pirates_1.pirates,
+    });
 });
 app.get("/sendmail", (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
     mail_1.default.setApiKey(process.env.SENDGRID_API_KEY);
