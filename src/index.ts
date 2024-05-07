@@ -1,6 +1,8 @@
 import express, { Request, Response } from "express";
 import { v4 } from "uuid";
 import { pirates } from "./pirates";
+import sgMail from "@sendgrid/mail";
+
 const app = express();
 const port = process.env.PORT || 8080;
 
@@ -93,6 +95,29 @@ app.get("/pirates", (_req: Request, res: Response) => {
   } catch (error) {
     console.error(error);
     res.status(500).send("Error retrieving pirates");
+  }
+});
+
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
+const msg = {
+  to: "maxsmith@gmail.com", // Sender
+  from: "joeburton@gmail.com", // Recipient: Use the email address or domain you verified above
+  subject: "Senior Frontend Engineer Role",
+  text: "We have a whole world of Development challenges waiting for you.",
+  html: "<strong>You will be using AI, ohhh wow I hear you cry... removed</strong>",
+};
+
+app.get("sendmail", async (_req: Request, res: Response) => {
+  try {
+    const response = await sgMail.send(msg);
+    res.end(`Mail sent: ${response}`);
+  } catch (error) {
+    console.error(error);
+    if (error.response) {
+      console.error(error.response.body);
+      res.status(500).send("Email failed to send");
+    }
   }
 });
 
