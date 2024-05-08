@@ -121,7 +121,7 @@ app.get("/pirates-data", (_req: Request, res: Response) => {
   });
 });
 
-app.post("/sendmail", (req: Request, res: Response) => {
+app.post("/enquiry", (req: Request, res: Response) => {
   sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
   const name = req.body?.name;
