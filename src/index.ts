@@ -9,11 +9,15 @@ import { pirates } from "./pirates";
 const app = express();
 const port = process.env.PORT || 8080;
 
-app.use(cors());
-
 dotenv.config();
 
-console.log(process.env.NODE_ENV);
+app.use(
+  cors({
+    origin: process.env.FRONT_END_URL, // specify the origin for CORS
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // specify the methods for CORS
+    credentials: true, // Access-Control-Allow-Credentials CORS header. Set to true to pass the header, otherwise it is omitted.
+  })
+);
 
 app.use(express.json());
 
