@@ -7,5 +7,18 @@
       "config": { "includeFiles": ["dist/**"] }
     }
   ],
-  "rewrites": [{ "source": "/(.*)", "destination": "dist/index.js" }]
+  "rewrites": [{ "source": "/(.*)", "destination": "dist/index.js" }],
+  "headers": [
+    {
+      "src": "/(.*)",
+      "methods": ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
+      "headers": {
+        "Access-Control-Allow-Origin": "https://portfolio-saturn.vercel.app",
+        "Access-Control-Allow-Methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+        "Access-Control-Allow-Headers": "Content-Type",
+        "Access-Control-Allow-Credentials": "true"
+      },
+      "continue": true
+    }
+  ]
 }
