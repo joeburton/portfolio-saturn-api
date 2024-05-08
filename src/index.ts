@@ -11,7 +11,13 @@ const port = process.env.PORT || 8080;
 
 dotenv.config();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: process.env.FRONT_END_URL, // specify the origin for CORS
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // specify the methods for CORS
+    credentials: true, // Access-Control-Allow-Credentials CORS header. Set to true to pass the header, otherwise it is omitted.
+  })
+);
 
 console.log(process.env.NODE_ENV);
 
@@ -116,6 +122,19 @@ app.get("/pirates-data", (_req: Request, res: Response) => {
 });
 
 app.post("/enquiry", (req: Request, res: Response) => {
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  // another common pattern
+  // res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET,OPTIONS,PATCH,DELETE,POST,PUT"
+  );
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
+  );
+
   sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
   const name = req.body?.name;
