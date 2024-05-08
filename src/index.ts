@@ -150,7 +150,6 @@ app.post("/sendmail", (req: Request, res: Response) => {
         message,
       },
     });
-    console.log("email sent");
   } catch (error) {
     console.error(error);
     if (error.response) {
