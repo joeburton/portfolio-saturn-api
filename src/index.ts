@@ -7,18 +7,17 @@ import cors from "cors";
 import { pirates } from "./pirates";
 
 const app = express();
-app.use(cors());
 const port = process.env.PORT || 8080;
 
 dotenv.config();
 
-// app.use(
-//   cors({
-//     origin: process.env.FRONT_END_URL, // specify the origin for CORS
-//     methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // specify the methods for CORS
-//     credentials: true, // Access-Control-Allow-Credentials CORS header. Set to true to pass the header, otherwise it is omitted.
-//   })
-// );
+app.use(
+  cors({
+    origin: true, // specify the origin for CORS
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // specify the methods for CORS
+    credentials: true, // Access-Control-Allow-Credentials CORS header. Set to true to pass the header, otherwise it is omitted.
+  })
+);
 
 console.log(process.env.NODE_ENV);
 
