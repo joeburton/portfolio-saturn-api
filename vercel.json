@@ -10,7 +10,7 @@
   "rewrites": [{ "source": "/(.*)", "destination": "dist/index.js" }],
   "headers": [
     {
-      "src": "/(.*)",
+      "source": "/(.*)",
       "methods": ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
       "headers": {
         "Access-Control-Allow-Origin": "https://portfolio-saturn.vercel.app",
