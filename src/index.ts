@@ -158,6 +158,43 @@ app.post("/sendmail", (req: Request, res: Response) => {
   }
 });
 
+app.post("/enquiry", (req: Request, res: Response) => {
+  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
+  const name = req.body?.name;
+  const email = req.body?.email;
+  const phoneNumber = req.body?.phoneNumber;
+  const message = req.body?.message;
+
+  const msg = {
+    to: "joeburton@gmail.com", // email address that will receive message
+    from: "joeburton@gmail.com", // @sendgrid/mail registered email
+    subject: `Enquiry from ${email}`,
+    text: `Name: ${name}\nEmail: ${email}\nPhone Number: ${phoneNumber}\nMessage: ${message}`,
+    html: `<p>Name: ${name}</p><p>Email: ${email}</p><p>Phone Number: ${phoneNumber}</p><p>Message: ${message}</p>`,
+  };
+
+  try {
+    // await sgMail.send(msg);
+
+    res.status(200).json({
+      message: "Success",
+      data: {
+        name,
+        email,
+        phoneNumber,
+        message,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    if (error.response) {
+      console.error(error.response.body);
+      res.status(500).send("Email failed to send");
+    }
+  }
+});
+
 app.listen(port, () => {
   return console.log(`Server is listening on ${port}`);
 });
