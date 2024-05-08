@@ -1,11 +1,27 @@
 import express, { Request, Response } from "express";
 import sgMail from "@sendgrid/mail";
 import { v4 } from "uuid";
+import dotenv from "dotenv";
+import cors from "cors";
 
 import { pirates } from "./pirates";
 
 const app = express();
 const port = process.env.PORT || 8080;
+
+dotenv.config();
+
+app.use(
+  cors({
+    origin: process.env.FRONT_END_URL, // specify the origin for CORS
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // specify the methods for CORS
+    credentials: true, // Access-Control-Allow-Credentials CORS header. Set to true to pass the header, otherwise it is omitted.
+  })
+);
+
+console.log(process.env.NODE_ENV);
+
+app.use(express.json());
 
 app.get("/", (_req: Request, res: Response) => {
   return res.send("Express Typescript on Vercel");
@@ -105,14 +121,15 @@ app.get("/pirates-data", (_req: Request, res: Response) => {
   });
 });
 
-app.get("/sendmail", async (_req: Request, res: Response) => {
+app.post("/sendmail", (req: Request, res: Response) => {
   sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-  const name = "Jill Hill";
-  const email = "jillhill@hotmail.com";
-  const phoneNumber = "0668932134";
-  const message =
-    "I have a fascinating proposition for you Joe, please do get in touch!";
+  console.log(req.body);
+
+  const name = req.body?.name;
+  const email = req.body?.email;
+  const phoneNumber = req.body?.phoneNumber;
+  const message = req.body?.message;
 
   const msg = {
     to: "joeburton@gmail.com", // email address that will receive message
@@ -123,7 +140,7 @@ app.get("/sendmail", async (_req: Request, res: Response) => {
   };
 
   try {
-    await sgMail.send(msg);
+    // await sgMail.send(msg);
     res.status(200).json({
       message: "Success",
       data: {
@@ -133,6 +150,7 @@ app.get("/sendmail", async (_req: Request, res: Response) => {
         message,
       },
     });
+    console.log("email sent");
   } catch (error) {
     console.error(error);
     if (error.response) {
