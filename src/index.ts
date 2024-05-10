@@ -140,13 +140,13 @@ app.post("/mailsender", async (req: Request, res: Response) => {
     console.log(response);
     res.status(200).json({
       message: "Success",
-      data: {
+      postData: {
         name,
         email,
         phoneNumber,
         message,
-        response,
       },
+      response,
     });
   } catch (error) {
     console.error(error);
