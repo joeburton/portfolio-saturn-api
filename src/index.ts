@@ -119,7 +119,7 @@ app.get("/pirates-data", (_req: Request, res: Response) => {
   });
 });
 
-app.post("/enquiry", async (req: Request, res: Response) => {
+app.post("/mailsender", async (req: Request, res: Response) => {
   sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
   const name = req.body?.name;
@@ -136,8 +136,8 @@ app.post("/enquiry", async (req: Request, res: Response) => {
   };
 
   try {
-    await sgMail.send(msg);
-
+    const response = await sgMail.send(msg);
+    console.log(response);
     res.status(200).json({
       message: "Success",
       data: {
@@ -145,6 +145,7 @@ app.post("/enquiry", async (req: Request, res: Response) => {
         email,
         phoneNumber,
         message,
+        response,
       },
     });
   } catch (error) {
