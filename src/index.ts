@@ -137,7 +137,6 @@ app.post("/mailsender", async (req: Request, res: Response) => {
 
   try {
     const response = await sgMail.send(msg);
-    console.log(response);
     res.status(200).json({
       message: "Success",
       postData: {
