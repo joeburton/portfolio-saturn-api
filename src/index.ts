@@ -43,8 +43,8 @@ app.get("/api/item/:slug", (req: Request, res: Response) => {
 
 app.get("/pirates", (_req: Request, res: Response) => {
   try {
-    if (pirates && pirates.rows.length > 0) {
-      let tableContent = pirates.rows
+    if (pirates && pirates.length > 0) {
+      let tableContent = pirates
         .map(
           (user) =>
             `<tr>
