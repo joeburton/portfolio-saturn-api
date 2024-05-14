@@ -45,8 +45,8 @@ app.get("/api/item/:slug", (req, res) => {
 });
 app.get("/pirates", (_req, res) => {
     try {
-        if (pirates_1.pirates && pirates_1.pirates.rows.length > 0) {
-            let tableContent = pirates_1.pirates.rows
+        if (pirates_1.pirates && pirates_1.pirates.length > 0) {
+            let tableContent = pirates_1.pirates
                 .map((user) => `<tr>
                 <td>${user.id}</td>
                 <td>${user.name}</td>
@@ -134,7 +134,6 @@ app.post("/mailsender", (req, res) => __awaiter(void 0, void 0, void 0, function
     };
     try {
         const response = yield mail_1.default.send(msg);
-        console.log(response);
         res.status(200).json({
             message: "Success",
             postData: {
