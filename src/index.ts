@@ -114,9 +114,7 @@ app.get("/pirates", (_req: Request, res: Response) => {
 });
 
 app.get("/pirates-data", (_req: Request, res: Response) => {
-  res.status(200).json({
-    pirates,
-  });
+  res.status(200).json(pirates);
 });
 
 app.post("/mailsender", async (req: Request, res: Response) => {
